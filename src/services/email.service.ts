@@ -15,9 +15,7 @@ export async function sendOtpEmail(email: string, code: string): Promise<void> {
   }
   try {
     await resend.emails.send({
-      from: "OXIER <noreply@oxier.com>",
-      to: email,
-      subject: "Your OXIER Verification Code",
+      from: "OXIER <onboarding@resend.dev>",
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
           <h2 style="color:#1a1a2e">OXIER Verification</h2>
@@ -41,9 +39,7 @@ export async function sendRejectionEmail(
   if (!resend) return;
   try {
     await resend.emails.send({
-      from: "OXIER <noreply@oxier.com>",
-      to: email,
-      subject: "Transaction Update — OXIER",
+      from: "OXIER <onboarding@resend.dev>",
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
           <h2 style="color:#1a1a2e">Transaction ${txId}</h2>
