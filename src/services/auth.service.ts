@@ -208,3 +208,20 @@ export async function deleteAccount(
   await otp.updateOne({ used: true });
   await User.findByIdAndDelete(userId);
 }
+
+export async function getMe(userId: string): Promise<object> {
+  const user = await User.findById(userId);
+  if (!user) throw new Error("User not found");
+
+  return {
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role,
+    walletType: user.walletType,
+    demoBalance: user.demoBalance,
+    realBalance: user.realBalance,
+    bonusBalance: user.bonusBalance,
+  };
+}
