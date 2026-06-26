@@ -6,6 +6,7 @@ import {
   sendPasswordResetOtp,
   resetPassword,
   deleteAccount,
+  getMe,
 } from "../services/auth.service";
 import { authMiddleware, AuthRequest } from "../middleware/auth.middleware";
 import { authLimiter } from "../middleware/rate-limit.middleware";
@@ -85,6 +86,15 @@ router.post("/send-delete-otp", authMiddleware, async (req: AuthRequest, res: Re
     res.json({ message: "OTP sent" });
   } catch {
     res.status(500).json({ error: "Failed to send OTP" });
+  }
+});
+
+router.get("/me", authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const user = await getMe(req.user!.id);
+    res.json(user);
+  } catch (err: unknown) {
+    res.status(404).json({ error: err instanceof Error ? err.message : "User not found" });
   }
 });
 
